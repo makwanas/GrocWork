@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header.js';
 import ListItem from './components/ListItem.js';
 import AddItem from './components/AddItem.js';
 import DeleteChecked from './components/DeleteChecked.js';
-import { View, StyleSheet, FlatList, Alert } from 'react-native';
+import TitleLogo from './components/TitleLogo.js';
+import { View, Text, StyleSheet, FlatList, Alert, TouchableWithoutFeedback, Keyboard, Button, TouchableOpacity } from 'react-native';
 import { v4 as uuidv4 } from 'uuid';
+import HomeStack from './components/routes/HomeStack.js';
+import auth from '@react-native-firebase/auth';
+
 
 const App = () => {
   const [items, setItems] = useState([
@@ -80,10 +84,38 @@ const App = () => {
   console.log("Checked items are:", checkedItems)
   console.log("Overall items are:", items)
 
-  return (
-    <View style={styles.container}>
-      <Header title="GrocWork" />
-      <AddItem addItem={addItem} />
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  const handleLogOut = () => {
+    auth()
+      .signOut()
+      .then(() => console.log(`User signed out!`));
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
+
+  if (!user) {
+
+    return (
+
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <TitleLogo />
+          <HomeStack />
+          {/* <AddItem addItem={addItem} />
       <FlatList data={items}
         renderItem={({ item }) =>
           <ListItem item={item}
@@ -96,7 +128,16 @@ const App = () => {
             itemChecked={itemChecked}
             checkedItems={checkedItems} />}
       />
-      <DeleteChecked deleteCheckedItems={deleteCheckedItems} />
+      <DeleteChecked deleteCheckedItems={deleteCheckedItems} /> */}
+        </View>
+      </TouchableWithoutFeedback>
+    )
+  }
+  return (
+    <View>
+      <Text>Welcome {user.email}</Text>
+      <TouchableOpacity onPress={handleLogOut}>
+        <Text>LogOut</Text></TouchableOpacity>
     </View>
   )
 }

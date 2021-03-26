@@ -42,8 +42,8 @@ export default function Workspace() {
     }
 
     return (
-        <View>
-            <ShoppingLists user={user} />
+        <View style={styles.container}>
+            <ShoppingLists />
         </View>
     )
 
@@ -51,6 +51,8 @@ export default function Workspace() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor:'#EAEDED'
+
     }
 })

@@ -4,7 +4,7 @@ import {Formik} from 'formik';
 import * as yup from 'yup';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from "@react-native-google-signin/google-signin";
+import {GoogleSignin, GoogleSigninButton} from "@react-native-google-signin/google-signin";
 
 const reviewSchema = yup.object({
     email: yup.string().required().email(),
@@ -16,6 +16,19 @@ export default function Login({navigation}) {
     GoogleSignin.configure({
         webClientId: '358524342865-nc6enc2m0sra595311mpqvd4dn2bbmc7.apps.googleusercontent.com'
     })
+
+    async function onGoogleButtonPress() {
+        // Get the users ID token
+        const { idToken } = await GoogleSignin.signIn();
+
+        console.log(idToken)
+
+        // Create a Google credential with the token
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+        // Sign-in the user with the credential
+        return auth().signInWithCredential(googleCredential);
+    }
 
     return (
         <View>
@@ -67,9 +80,19 @@ export default function Login({navigation}) {
                 <TouchableOpacity style={styles.signInOptionsButton}>
                     <Text style={styles.signInOptionsText}> Sign in with Google</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.signInOptionsButton}>
+                <TouchableOpacity
+                    style={styles.signInOptionsButton}>
                     <Text style={styles.signInOptionsText}> Sign in with Apple</Text>
                 </TouchableOpacity>
+                <GoogleSigninButton
+                    style={{ width: 192, height: 48 }}
+                    size={GoogleSigninButton.Size.Wide}
+                    color={GoogleSigninButton.Color.Dark}
+                    onPress={() => {
+                        onGoogleButtonPress().then(() => {
+                            console.log('Signed in with Google!')
+                        })
+                    }} />
             </View>
         </View>
     )
@@ -128,12 +151,16 @@ export const styles = StyleSheet.create({
         margin: 5,
         justifyContent: 'center'
     },
+//      style={{ width: 192, height: 48 }}
+//      size={GoogleSigninButton.Size.Wide}
+//      color={GoogleSigninButton.Color.Dark}
     signInOptionsButton: {
         backgroundColor: '#AAB7B8',
         borderRadius: 10,
         margin: 5,
         borderWidth: 2,
-        borderColor: 'black'
+        borderColor: 'black',
+        color: GoogleSigninButton.Color.Dark
     },
     signInOptionsText: {
         fontSize: 18,

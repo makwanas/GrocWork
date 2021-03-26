@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, TouchableWithoutFeedback, Text, TouchableOpacity, StyleSheet, Keyboard } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, TouchableWithoutFeedback, Text, TouchableOpacity, StyleSheet, Keyboard} from 'react-native';
 import TitleLogo from './TitleLogo';
 import HomeStack from './routes/HomeStack';
 import auth from '@react-native-firebase/auth';
@@ -10,6 +10,8 @@ export default function Workspace() {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
 
+
+
     // Handle user state changes
     function onAuthStateChanged(user) {
         setUser(user);
@@ -17,12 +19,10 @@ export default function Workspace() {
     }
 
 
-
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
     }, []);
-
 
 
     if (initializing) return null;
@@ -33,8 +33,8 @@ export default function Workspace() {
 
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <TitleLogo />
-                    <HomeStack />
+                    <TitleLogo/>
+                    <HomeStack/>
                 </View>
             </TouchableWithoutFeedback>
 
@@ -43,7 +43,7 @@ export default function Workspace() {
 
     return (
         <View style={styles.container}>
-            <ShoppingLists />
+            <ShoppingLists/>
         </View>
     )
 
@@ -52,7 +52,7 @@ export default function Workspace() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'#EAEDED'
+        backgroundColor: '#EAEDED'
 
     }
 })

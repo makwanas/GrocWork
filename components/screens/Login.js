@@ -1,20 +1,26 @@
 import React from 'react';
-import { StyleSheet, Button, TextInput, View, TouchableOpacity, Text } from 'react-native';
-import { Formik } from 'formik';
+import {StyleSheet, Button, TextInput, View, TouchableOpacity, Text} from 'react-native';
+import {Formik} from 'formik';
 import * as yup from 'yup';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from "@react-native-google-signin/google-signin";
 
 const reviewSchema = yup.object({
     email: yup.string().required().email(),
     password: yup.string().required().min(8)
 })
 
-export default function Login({ navigation }) {
+export default function Login({navigation}) {
+
+    GoogleSignin.configure({
+        webClientId: '358524342865-nc6enc2m0sra595311mpqvd4dn2bbmc7.apps.googleusercontent.com'
+    })
+
     return (
         <View>
             <Formik
-                initialValues={{ email: '', password: '' }}
+                initialValues={{email: '', password: ''}}
                 validationSchema={reviewSchema}
                 onSubmit={(values, actions) => {
                     console.log("In Login form", values);
@@ -33,20 +39,22 @@ export default function Login({ navigation }) {
                     props => (
                         <View style={styles.loginContainer}>
                             <TextInput style={styles.inputTextContainer} placeholder='Enter your email'
-                                onChangeText={props.handleChange('email')}
-                                value={props.values.email}
-                                onBlur={props.handleBlur('email')} />
+                                       onChangeText={props.handleChange('email')}
+                                       value={props.values.email}
+                                       onBlur={props.handleBlur('email')}/>
                             <Text style={styles.errorText}>{props.touched.email && props.errors.email}</Text>
                             <PasswordInputText style={styles.inputTextContainer} placeholder='Enter your password'
-                                onChangeText={props.handleChange('password')}
-                                value={props.values.password}
-                                onBlur={props.handleBlur('password')} />
+                                               onChangeText={props.handleChange('password')}
+                                               value={props.values.password}
+                                               onBlur={props.handleBlur('password')}/>
                             <Text style={styles.errorText}>{props.touched.password && props.errors.password}</Text>
                             <View style={styles.loginAndRegisterButtonContainer}>
-                                <TouchableOpacity style={styles.loginButton} title="submit" onPress={props.handleSubmit}>
+                                <TouchableOpacity style={styles.loginButton} title="submit"
+                                                  onPress={props.handleSubmit}>
                                     <Text style={styles.loginText}>Login</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate('Register')}>
+                                <TouchableOpacity style={styles.registerButton}
+                                                  onPress={() => navigation.navigate('Register')}>
                                     <Text style={styles.registerText}>Register</Text>
                                 </TouchableOpacity>
                             </View>

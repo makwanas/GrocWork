@@ -19,7 +19,7 @@ export default function Login({navigation}) {
 
     async function onGoogleButtonPress() {
         // Get the users ID token
-        const { idToken } = await GoogleSignin.signIn();
+        const {idToken} = await GoogleSignin.signIn();
 
         console.log(idToken)
 
@@ -37,6 +37,7 @@ export default function Login({navigation}) {
                 validationSchema={reviewSchema}
                 onSubmit={(values, actions) => {
                     console.log("In Login form", values);
+
                     auth().signInWithEmailAndPassword(values.email, values.password)
                         .then(() => {
                             console.log("User logged in!")
@@ -45,7 +46,14 @@ export default function Login({navigation}) {
                             console.log(error);
                         })
 
+                    auth().onAuthStateChanged(user=>{
+                        if (user) {
+                            user.reload()
+                            console.log('AuthStateChanged === ', user)
+                        }
+                    })
                     actions.resetForm();
+
                 }}
             >
                 {
@@ -85,14 +93,14 @@ export default function Login({navigation}) {
                     <Text style={styles.signInOptionsText}> Sign in with Apple</Text>
                 </TouchableOpacity>
                 <GoogleSigninButton
-                    style={{ width: 192, height: 48 }}
+                    style={{width: '100%', height: 48}}
                     size={GoogleSigninButton.Size.Wide}
                     color={GoogleSigninButton.Color.Dark}
                     onPress={() => {
                         onGoogleButtonPress().then(() => {
                             console.log('Signed in with Google!')
                         })
-                    }} />
+                    }}/>
             </View>
         </View>
     )

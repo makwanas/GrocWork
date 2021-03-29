@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {StyleSheet, Button, TextInput, View, TouchableOpacity, Text} from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin, GoogleSigninButton} from "@react-native-google-signin/google-signin";
+import {GoogleSignin, GoogleSigninButton, statusCodes} from "@react-native-google-signin/google-signin";
 
 const reviewSchema = yup.object({
     email: yup.string().required().email(),
@@ -13,21 +13,24 @@ const reviewSchema = yup.object({
 
 export default function Login({navigation}) {
 
-    GoogleSignin.configure({
-        webClientId: '358524342865-nc6enc2m0sra595311mpqvd4dn2bbmc7.apps.googleusercontent.com'
-    })
+    useEffect(() => {
+        GoogleSignin.configure({
+            webClientId: '358524342865-nc6enc2m0sra595311mpqvd4dn2bbmc7.apps.googleusercontent.com'
+        })
+    }, [])
+    
 
     async function onGoogleButtonPress() {
+
         // Get the users ID token
-        const { idToken } = await GoogleSignin.signIn();
+  const user = await GoogleSignin.signIn();
+  console.log("User is",user);
 
-        console.log(idToken)
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(user.idToken);
 
-        // Create a Google credential with the token
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-        // Sign-in the user with the credential
-        return auth().signInWithCredential(googleCredential);
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(googleCredential);
     }
 
     return (

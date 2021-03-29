@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "358524342865-ea9k6387voqmcais2fvrnrq15ctjgugc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grocwork",
+            "certificate_hash": "d43638583e9df71ec0578f844f80368a2426f085"
+          }
+        },
+        {
           "client_id": "358524342865-nc6enc2m0sra595311mpqvd4dn2bbmc7.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "358524342865",
+    "project_id": "grocwork-efe60",
+    "storage_bucket": "grocwork-efe60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358524342865:android:8f3d7142e55add2e47de70",
+        "android_client_info": {
+          "package_name": "com.grocwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358524342865-nc6enc2m0sra595311mpqvd4dn2bbmc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5RR_zrFcDNIhO8cMxJln0sJUS8iml4I4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358524342865-nc6enc2m0sra595311mpqvd4dn2bbmc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

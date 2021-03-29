@@ -1,1 +1,5 @@
+// User
 export const USER_STATE_CHANGE = 'USER_STATE_CHANGE';
+
+// GroceryList
+export const CREATE_GREOCERY_LIST = 'CREATE_GREOCERY_LIST'

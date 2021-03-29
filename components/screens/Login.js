@@ -36,19 +36,27 @@ export default function Login({navigation}) {
     return (
         <View>
             <Formik
-                initialValues={{email: '', password: ''}}
+                initialValues={{email: 'zengguanlun@gmail.com', password: 'password'}}
                 validationSchema={reviewSchema}
                 onSubmit={(values, actions) => {
-                    console.log("In Login form", values);
+                    //console.log("In Login form", values);
+
                     auth().signInWithEmailAndPassword(values.email, values.password)
                         .then(() => {
-                            console.log("User logged in!")
+                            //console.log("User logged in!")
                         })
                         .catch(error => {
-                            console.log(error);
+                            //console.log(error);
                         })
 
+                    auth().onAuthStateChanged(user=>{
+                        if (user) {
+                            user.reload()
+                            //console.log('AuthStateChanged === ', user)
+                        }
+                    })
                     actions.resetForm();
+
                 }}
             >
                 {
@@ -88,14 +96,14 @@ export default function Login({navigation}) {
                     <Text style={styles.signInOptionsText}> Sign in with Apple</Text>
                 </TouchableOpacity>
                 <GoogleSigninButton
-                    style={{ width: 192, height: 48 }}
+                    style={{width: '100%', height: 48}}
                     size={GoogleSigninButton.Size.Wide}
                     color={GoogleSigninButton.Color.Dark}
                     onPress={() => {
                         onGoogleButtonPress().then(() => {
                             console.log('Signed in with Google!')
                         })
-                    }} />
+                    }}/>
             </View>
         </View>
     )

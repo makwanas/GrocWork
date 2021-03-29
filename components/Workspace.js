@@ -28,7 +28,7 @@ export default function Workspace() {
     if (initializing) return null;
 
     if (!user) {
-        console.log('User Workspace === ', user)
+        //console.log('User Workspace === ', user)
         return (
 
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

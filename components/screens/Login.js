@@ -33,23 +33,23 @@ export default function Login({navigation}) {
     return (
         <View>
             <Formik
-                initialValues={{email: '', password: ''}}
+                initialValues={{email: 'zengguanlun@gmail.com', password: 'password'}}
                 validationSchema={reviewSchema}
                 onSubmit={(values, actions) => {
-                    console.log("In Login form", values);
+                    //console.log("In Login form", values);
 
                     auth().signInWithEmailAndPassword(values.email, values.password)
                         .then(() => {
-                            console.log("User logged in!")
+                            //console.log("User logged in!")
                         })
                         .catch(error => {
-                            console.log(error);
+                            //console.log(error);
                         })
 
                     auth().onAuthStateChanged(user=>{
                         if (user) {
                             user.reload()
-                            console.log('AuthStateChanged === ', user)
+                            //console.log('AuthStateChanged === ', user)
                         }
                     })
                     actions.resetForm();

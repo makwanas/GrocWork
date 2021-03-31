@@ -9,6 +9,7 @@ import HeaderCard from './HeaderCard';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 import {createGroceryList} from '../redux/actions/groceryListAction'
+import GroceryLists from "./GroceryLists";
 
 export default function ShoppingLists() {
     const dispatch = useDispatch();
@@ -20,7 +21,9 @@ export default function ShoppingLists() {
     }, [])
 
     const currentUser = useSelector(getCurrentUser);
-    const groc = useSelector(state => state.groceryList)
+    const groceryLists = useSelector(state => state.groceryList)
+
+    console.log('Shopping list === ', groceryLists)
 
     return (
         <View style={styles.shoppingListContainer}>
@@ -37,7 +40,7 @@ export default function ShoppingLists() {
                             <Text style={styles.greetingText}>Welcome {currentUser.name}</Text>
                         }
                     </View>
-
+                    <GroceryLists groceryLists={groceryLists} />
                     <View style={styles.shoppingListItemContainer}>
                         <Formik
                             initialValues={{shoppingListName: ''}}

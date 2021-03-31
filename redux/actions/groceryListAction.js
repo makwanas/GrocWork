@@ -34,13 +34,15 @@ export const createGroceryList = (name, privacy) => async dispatch => {
 }
 
 export const loadGroceryLists = (groceryListIds) => async dispatch => {
+    let groceryData = []
     for (const groceryListId of groceryListIds) {
         console.log('Loading grocery lists...', groceryListId)
 
         const groceryListRef = firestore().collection('GroceryList')
         const groceryListDoc = await groceryListRef.doc(groceryListId).get()
-        const groceryData = groceryListDoc.data()
-
+        groceryData.push(groceryListDoc.data())
+    }
+    if (groceryData !== []) {
         dispatch({
             type: types.LOAD_GROCERY_LISTS,
             oneGroceryList: groceryData

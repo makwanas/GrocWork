@@ -19,10 +19,8 @@ const groceryListReducer = (state = initialState, action) => {
             ]
 
         case types.LOAD_GROCERY_LISTS:
-            return [
-                ...state,
-                action.oneGroceryList
-            ]
+            return action.oneGroceryList
+
 
         default:
             return state

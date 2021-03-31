@@ -5,8 +5,7 @@ const initialState = []
 const groceryListReducer = (state = initialState, action) => {
     switch (action.type) {
         // Create a grocery list without changing any state.
-        case types.CREATE_GREOCERY_LIST:
-            console.log('Within Reducer === ', action.groceryList)
+        case types.CREATE_GROCERY_LIST:
             return [
                 {
                     groceryListId: action.groceryList.groceryListId,
@@ -17,6 +16,12 @@ const groceryListReducer = (state = initialState, action) => {
                     items: action.groceryList.items
                 },
                 ...state
+            ]
+
+        case types.LOAD_GROCERY_LISTS:
+            return [
+                ...state,
+                action.oneGroceryList
             ]
 
         default:

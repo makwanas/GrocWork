@@ -1,11 +1,13 @@
 import * as types from '../constants/index'
 import auth from '@react-native-firebase/auth'
 import firestore from "@react-native-firebase/firestore";
+import {addNewGroceryListId} from '../actions/userAction'
+
 
 export const createGroceryList = (name, privacy) => async dispatch => {
     const currentUserUid = auth().currentUser.uid
     const dateCreated = new Date()
-    let data = {
+    const data = {
         userId: currentUserUid,
         members: [currentUserUid],
         name: name,
@@ -13,19 +15,35 @@ export const createGroceryList = (name, privacy) => async dispatch => {
         privacy: privacy,
         items: []
     }
-    firestore()
-        .collection('GroceryList')
+    const res = await firestore().collection('GroceryList')
         .add(data)
         .then(docRef => {
-            console.log('Document written with ID', docRef.id)
-            data = {
-                ...data,
-                groceryListId: docRef.id
-            }
-            console.log('DATA === ', data)
+            console.log('GroceryListId === ', docRef.id)
             dispatch({
-                type: types.CREATE_GREOCERY_LIST,
+                type: types.CREATE_GROCERY_LIST,
                 groceryList: data
             })
+
+            // update user listCreated as well
+            dispatch(addNewGroceryListId(docRef.id))
+            dispatch({
+                type: types.ADD_NEW_GROCERYLIST_ID,
+                newlyCreatedGroceryListId: docRef.id
+            })
         })
+}
+
+export const loadGroceryLists = (groceryListIds) => async dispatch => {
+    for (const groceryListId of groceryListIds) {
+        console.log('Loading grocery lists...', groceryListId)
+
+        const groceryListRef = firestore().collection('GroceryList')
+        const groceryListDoc = await groceryListRef.doc(groceryListId).get()
+        const groceryData = groceryListDoc.data()
+
+        dispatch({
+            type: types.LOAD_GROCERY_LISTS,
+            oneGroceryList: groceryData
+        })
+    }
 }

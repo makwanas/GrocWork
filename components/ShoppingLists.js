@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Text, TouchableOpacity, View, TextInput, ActivityIndicator, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
-import {fetchUser} from '../redux/actions/index';
+import {fetchGroceryLists, fetchUser} from '../redux/actions/userAction';
 import {getCurrentUser} from '../redux/selectors/index';
 import {Formik} from 'formik';
 import HeaderCard from './HeaderCard';
@@ -15,10 +15,12 @@ export default function ShoppingLists() {
 
     useEffect(() => {
         const fetchUserAction = fetchUser();
+        dispatch(fetchGroceryLists())
         dispatch(fetchUserAction);
     }, [])
 
     const currentUser = useSelector(getCurrentUser);
+    const groc = useSelector(state => state.groceryList)
 
     return (
         <View style={styles.shoppingListContainer}>
@@ -30,7 +32,10 @@ export default function ShoppingLists() {
                 :
                 <View style={styles.afterGreetingContainer}>
                     <View style={styles.greetingContainer}>
-                        <Text style={styles.greetingText}>Welcome {currentUser.name}</Text>
+                        {
+                            currentUser && currentUser.name !== null &&
+                            <Text style={styles.greetingText}>Welcome {currentUser.name}</Text>
+                        }
                     </View>
 
                     <View style={styles.shoppingListItemContainer}>
@@ -38,6 +43,8 @@ export default function ShoppingLists() {
                             initialValues={{shoppingListName: ''}}
                             onSubmit={(values, actions) => {
                                 console.log('Values === ', values);
+
+                                // create a grocery list
                                 dispatch(createGroceryList(values.shoppingListName, true))
                                 actions.resetForm()
                             }}>

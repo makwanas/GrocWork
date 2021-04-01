@@ -88,14 +88,7 @@ export default function Login({navigation}) {
 
             </Formik>
             <View style={styles.signInOptionsContainer}>
-                <TouchableOpacity style={styles.signInOptionsButton}>
-                    <Text style={styles.signInOptionsText}> Sign in with Google</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.signInOptionsButton}>
-                    <Text style={styles.signInOptionsText}> Sign in with Apple</Text>
-                </TouchableOpacity>
-                <GoogleSigninButton
+            <GoogleSigninButton
                     style={{width: '100%', height: 48}}
                     size={GoogleSigninButton.Size.Wide}
                     color={GoogleSigninButton.Color.Dark}
@@ -104,6 +97,11 @@ export default function Login({navigation}) {
                             console.log('Signed in with Google!')
                         })
                     }}/>
+                <TouchableOpacity
+                    style={styles.signInOptionsButton}>
+                    <Text style={styles.signInOptionsText}> Sign in with Apple</Text>
+                </TouchableOpacity>
+                
             </View>
         </View>
     )

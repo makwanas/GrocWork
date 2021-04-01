@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {View, TouchableWithoutFeedback, Text, TouchableOpacity, StyleSheet, Keyboard} from 'react-native';
 import TitleLogo from './TitleLogo';
-import HomeStack from './routes/HomeStack';
+import RegistrationHomeStack from './routes/RegistrationHomeStack';
 import auth from '@react-native-firebase/auth';
-import ShoppingLists from './ShoppingLists';
+import ShoppingListHomeStack from './routes/ShoppingListHomeStack';
+import VerifyEmail from './VerifyEmail';
 
 export default function Workspace() {
     // Set an initializing state whilst Firebase connects
@@ -34,7 +35,7 @@ export default function Workspace() {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
                     <TitleLogo/>
-                    <HomeStack/>
+                    <RegistrationHomeStack/>
                 </View>
             </TouchableWithoutFeedback>
 
@@ -43,7 +44,8 @@ export default function Workspace() {
 
     return (
         <View style={styles.container}>
-            <ShoppingLists/>
+            <VerifyEmail user={user} />
+            {/* <ShoppingListHomeStack /> */}
         </View>
     )
 

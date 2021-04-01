@@ -6,7 +6,6 @@ import DeleteChecked from './components/DeleteChecked.js';
 import TitleLogo from './components/TitleLogo.js';
 import { View, Text, StyleSheet, FlatList, Alert, TouchableWithoutFeedback, Keyboard, Button, TouchableOpacity } from 'react-native';
 import { v4 as uuidv4 } from 'uuid';
-import HomeStack from './components/routes/HomeStack.js';
 import auth from '@react-native-firebase/auth';
 import { Provider } from 'react-redux';
 import Workspace from './components/Workspace';

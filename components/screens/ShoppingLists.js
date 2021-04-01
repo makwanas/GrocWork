@@ -2,13 +2,13 @@ import React, {useEffect} from 'react'
 import {Text, TouchableOpacity, View, TextInput, ActivityIndicator, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
-import {fetchUser} from '../redux/actions/index';
-import {getCurrentUser} from '../redux/selectors/index';
+import {fetchUser} from '../../redux/actions/index';
+import {getCurrentUser} from '../../redux/selectors/index';
 import {Formik} from 'formik';
-import HeaderCard from './HeaderCard';
+import HeaderCard from '../HeaderCard';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import {createGroceryList} from '../../redux/actions/groceryListAction';
 
-import {createGroceryList} from '../redux/actions/groceryListAction'
 
 export default function ShoppingLists() {
     const dispatch = useDispatch();

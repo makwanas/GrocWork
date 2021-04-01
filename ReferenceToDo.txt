@@ -1,0 +1,13 @@
+Login page:
+1) Not hard coded
+2) Sign In with Apple working
+3) Password module fix
+4) Proper CSS stuff
+5) Forgot password
+
+Register Page:
+1) Password module fix
+2) Proper CSS stuff
+
+ShoppingList Page:
+1) Alert not showing 

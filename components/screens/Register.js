@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, TextInput, TouchableOpacity} from 'react-native'
+import {Text, View, TextInput, TouchableOpacity, Alert} from 'react-native'
 import {Formik} from 'formik';
 import {styles} from './Login';
 import * as yup from 'yup';
@@ -46,6 +46,11 @@ function Register({navigation}) {
                                 console.log('User === ', user)
                                 if (user.emailVerified === false) {
                                     user.sendEmailVerification().then(() => {
+                                        Alert.alert("Verify email", " Please click on the link sent in the mentioned email",
+                                        [{
+                                            text: "Ok"
+                                        }],
+                                        {cancelable: true})
                                         console.log("email verification sent to user");
                                     });
                                 } else {

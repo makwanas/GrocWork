@@ -23,7 +23,7 @@ export default function ShoppingLists() {
     const currentUser = useSelector(getCurrentUser);
     const groceryLists = useSelector(state => state.groceryList)
 
-    console.log('Shopping list === ', groceryLists)
+    //console.log('Shopping list === ', groceryLists)
 
     return (
         <View style={styles.shoppingListContainer}>
@@ -45,7 +45,7 @@ export default function ShoppingLists() {
                         <Formik
                             initialValues={{shoppingListName: ''}}
                             onSubmit={(values, actions) => {
-                                console.log('Values === ', values);
+                                //console.log('Values === ', values);
 
                                 // create a grocery list
                                 dispatch(createGroceryList(values.shoppingListName, true))

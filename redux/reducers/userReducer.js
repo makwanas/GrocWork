@@ -12,11 +12,14 @@ export const userReducer = (state = initialState, action) => {
                 currentUser: action.currentUser
             }
 
-        case types.ADD_NEW_GROCERYLIST_ID:
-            return{
+        case types.ADD_NEW_GROCERY_LIST_ID:
+            return {
                 ...state,
                 currentUser: action.updateData
             }
+
+        case types.UPDATE_USER:
+            return action.updateData
 
         default:
             return state

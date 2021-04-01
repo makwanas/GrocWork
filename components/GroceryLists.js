@@ -3,12 +3,10 @@ import GroceryList from "./GroceryList";
 import {View, Text} from 'react-native'
 
 const GroceryLists = ({groceryLists}) => {
-
-    return ( groceryLists &&
-
+    return (
         <View>
-            {groceryLists.map(groceryList => {
-                return <GroceryList groceryList={groceryList} />
+            {groceryLists && groceryLists.map(groceryList => {
+                return <GroceryList groceryList={groceryList}/>
             })}
         </View>
     )

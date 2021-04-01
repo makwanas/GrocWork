@@ -9,7 +9,7 @@ const groceryListReducer = (state = initialState, action) => {
             return [
                 {
                     groceryListId: action.groceryList.groceryListId,
-                    members: [action.groceryList.members],
+                    members: action.groceryList.members,
                     name: action.groceryList.name,
                     dateCreated: action.groceryList.dateCreated,
                     privacy: action.groceryList.privacy,
@@ -21,6 +21,8 @@ const groceryListReducer = (state = initialState, action) => {
         case types.LOAD_GROCERY_LISTS:
             return action.oneGroceryList
 
+        case types.DELETE_GROCERY_LIST:
+            return action.updateData
 
         default:
             return state

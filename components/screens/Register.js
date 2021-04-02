@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, TextInput, TouchableOpacity} from 'react-native'
+import {Text, View, TextInput, TouchableOpacity, Alert} from 'react-native'
 import {Formik} from 'formik';
 import {styles} from './Login';
 import * as yup from 'yup';
@@ -21,8 +21,8 @@ function Register({navigation}) {
         <View>
             <Formik
                 initialValues={{
-                    name: 'Guan Lun',
-                    email: 'zengguanlun@gmail.com',
+                    name: 'Saurabhkumar Makwana',
+                    email: 'makwanas@oregonstate.edu',
                     password: 'password'
                 }}
                 validationSchema={reviewSchema}

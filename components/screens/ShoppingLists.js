@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react'
-import {Text, TouchableOpacity, View, TextInput, ActivityIndicator, StyleSheet} from 'react-native';
+import {Text, TouchableOpacity, View, TextInput, StyleSheet, Button} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import {fetchGroceryLists, fetchUser} from '../redux/actions/userAction';
 import {getCurrentUser} from '../redux/selectors/index';
+
 import {Formik} from 'formik';
-import HeaderCard from './HeaderCard';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 import {createGroceryList} from '../redux/actions/groceryListAction'
@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     afterGreetingContainer: {
-        flex: 1,
-        backgroundColor: 'blue'
+        flex: 1
     }
 })

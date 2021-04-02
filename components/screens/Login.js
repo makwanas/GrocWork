@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from "@react-native-google-signin/google-signin";
+import firestore from '@react-native-firebase/firestore';
 
 const reviewSchema = yup.object({
     email: yup.string().required().email(),
@@ -30,7 +31,20 @@ export default function Login({navigation}) {
   const googleCredential = auth.GoogleAuthProvider.credential(user.idToken);
 
   // Sign-in the user with the credential
-  return auth().signInWithCredential(googleCredential);
+  auth().signInWithCredential(googleCredential)
+  .then((user) => {
+      console.log("Google sign in method");
+      console.log("Checking google user and email verified", user, user.user.emailVerified)
+      firestore().collection('Users')
+                                .doc(auth().currentUser.uid)
+                                .set({
+                                    name: user.user.displayName,
+                                    email: user.user.email
+                                })
+                                .then(() => {
+                                    console.log("User added to the Firestore using Google Sign in");
+                                })
+  })
     }
 
     return (
@@ -88,14 +102,7 @@ export default function Login({navigation}) {
 
             </Formik>
             <View style={styles.signInOptionsContainer}>
-                <TouchableOpacity style={styles.signInOptionsButton}>
-                    <Text style={styles.signInOptionsText}> Sign in with Google</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.signInOptionsButton}>
-                    <Text style={styles.signInOptionsText}> Sign in with Apple</Text>
-                </TouchableOpacity>
-                <GoogleSigninButton
+            <GoogleSigninButton
                     style={{width: '100%', height: 48}}
                     size={GoogleSigninButton.Size.Wide}
                     color={GoogleSigninButton.Color.Dark}
@@ -104,6 +111,11 @@ export default function Login({navigation}) {
                             console.log('Signed in with Google!')
                         })
                     }}/>
+                <TouchableOpacity
+                    style={styles.signInOptionsButton}>
+                    <Text style={styles.signInOptionsText}> Sign in with Apple</Text>
+                </TouchableOpacity>
+                
             </View>
         </View>
     )

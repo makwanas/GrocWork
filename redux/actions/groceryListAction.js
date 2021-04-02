@@ -59,51 +59,32 @@ export const loadGroceryLists = (groceryListIds) => async dispatch => {
 }
 
 export const deleteGroceryList = (groceryListId) => async dispatch => {
-    //const res = await firestore().collection('GroceryList').doc(groceryListId).delete()
 
     const groceryListRef = firestore().collection('GroceryList').doc(groceryListId)
     const groceryListDoc = await groceryListRef.get()
     const groceryListData = groceryListDoc.data()
 
-    // remotely
     const members = groceryListData.members.filter(id => id !== auth().currentUser.uid)
-    await groceryListRef.update({members: members})
 
-    // locally
+    console.log('Members ==> ', members)
+    if (members.length === 0) {
+        await groceryListRef.delete()
+    } else {
+        await groceryListRef.update({members: members})
+    }
+
     const updateData = {
         ...groceryListData,
         members: members
     }
 
-
     const userRef = firestore().collection('Users').doc(auth().currentUser.uid)
     const userDoc = await userRef.get()
     const userData = userDoc.data()
-    
+
     const listCreated = userData.listCreated.filter(id => id !== groceryListId)
     await userRef.update({listCreated: listCreated})
 
-    dispatch(updateUser(/*{...userData, listCreated: listCreated}*/))
-    // dispatch({
-    //     type: types.DELETE_GROCERY_LIST,
-    //     updateData: updateData
-    // })
-
-    console.log('listCreated ==> ', listCreated)
+    dispatch(updateUser())
     dispatch(loadGroceryLists(userData.listCreated))
-
-    // remove from member from groceryList
-    // const userRef = firestore().collection('Users').doc(auth().currentUser.uid)
 }
-
-// const updateGroceryList = (g) => async dispatch => {
-//
-//     const groceryListData = await firestore().collection('GroceryList').get()
-//     let updateData = []
-//     console.log(groceryListData.forEach(doc => updateData.push(doc.data())))
-//     console.log('Update Grocery List Data ==> ', groceryListData)
-//     dispatch({
-//         type: types.UPDATE_GROCERY_LIST,
-//         updateData: updateData
-//     })
-// }

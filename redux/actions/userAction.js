@@ -63,6 +63,7 @@ export const fetchGroceryLists = () => async dispatch => {
 
 export const updateUser = () => async dispatch => {
     const updateData = await firestore().collection('Users').doc(auth().currentUser.uid).get()
+    console.log('Update User Data ==> ', updateData.data())
     dispatch({
         type: types.UPDATE_USER,
         updateData: updateData.data()

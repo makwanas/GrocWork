@@ -44,16 +44,16 @@ export const createGroceryList = (name, privacy) => async dispatch => {
 export const loadGroceryLists = (groceryListIds) => async dispatch => {
     let groceryData = []
     for (const groceryListId of groceryListIds) {
-        console.log('Loading grocery lists...', groceryListId)
+        // console.log('Loading grocery lists...', groceryListId)
 
         const groceryListRef = firestore().collection('GroceryList')
         const groceryListDoc = await groceryListRef.doc(groceryListId).get()
-        groceryData.push({...groceryListDoc.data(), groceryListId: groceryListId})
+        groceryData.push(groceryListDoc.data())
     }
     if (groceryData !== []) {
         dispatch({
             type: types.LOAD_GROCERY_LISTS,
-            oneGroceryList: groceryData
+            groceryList: groceryData
         })
     }
 }
@@ -75,31 +75,35 @@ export const deleteGroceryList = (groceryListId) => async dispatch => {
         members: members
     }
 
-    console.log('Update Data ==> ', updateData)
 
     const userRef = firestore().collection('Users').doc(auth().currentUser.uid)
     const userDoc = await userRef.get()
     const userData = userDoc.data()
-
-
+    
     const listCreated = userData.listCreated.filter(id => id !== groceryListId)
     await userRef.update({listCreated: listCreated})
 
-    console.log('dasdasdas', listCreated)
     dispatch(updateUser(/*{...userData, listCreated: listCreated}*/))
     // dispatch({
     //     type: types.DELETE_GROCERY_LIST,
     //     updateData: updateData
     // })
 
-    dispatch(updateGroceryList())
+    console.log('listCreated ==> ', listCreated)
+    dispatch(loadGroceryLists(userData.listCreated))
 
     // remove from member from groceryList
     // const userRef = firestore().collection('Users').doc(auth().currentUser.uid)
 }
 
-const updateGroceryList = () => async dispatch => {
-    const groceryListData = await firestore().collection('GroceryList').get()
-    let updateData = []
-    console.log(groceryListData.forEach(doc => updateData.push(doc.data())))
-}
+// const updateGroceryList = (g) => async dispatch => {
+//
+//     const groceryListData = await firestore().collection('GroceryList').get()
+//     let updateData = []
+//     console.log(groceryListData.forEach(doc => updateData.push(doc.data())))
+//     console.log('Update Grocery List Data ==> ', groceryListData)
+//     dispatch({
+//         type: types.UPDATE_GROCERY_LIST,
+//         updateData: updateData
+//     })
+// }

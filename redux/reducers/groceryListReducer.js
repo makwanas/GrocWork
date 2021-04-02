@@ -19,7 +19,7 @@ const groceryListReducer = (state = initialState, action) => {
             ]
 
         case types.LOAD_GROCERY_LISTS:
-            return action.oneGroceryList
+            return action.groceryList
 
         case types.DELETE_GROCERY_LIST:
             return action.updateData

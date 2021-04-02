@@ -28,51 +28,47 @@ export default function ShoppingLists() {
     return (
         <View style={styles.shoppingListContainer}>
             <HeaderCard/>
-            {currentUser === undefined ?
-                <View style={styles.activityContainer}>
-                    <ActivityIndicator size="large" color="black"/>
+
+            <View style={styles.afterGreetingContainer}>
+                <View style={styles.greetingContainer}>
+                    {
+                        currentUser && currentUser.name !== null &&
+                        <Text style={styles.greetingText}>Welcome {currentUser.name}</Text>
+                    }
                 </View>
-                :
-                <View style={styles.afterGreetingContainer}>
-                    <View style={styles.greetingContainer}>
+                <GroceryLists groceryLists={groceryLists}/>
+                <View style={styles.shoppingListItemContainer}>
+                    <Formik
+                        initialValues={{shoppingListName: ''}}
+                        onSubmit={(values, actions) => {
+                            //console.log('Values === ', values);
+
+                            // create a grocery list
+                            dispatch(createGroceryList(values.shoppingListName, true))
+                            actions.resetForm()
+                        }}>
                         {
-                            currentUser && currentUser.name !== null &&
-                            <Text style={styles.greetingText}>Welcome {currentUser.name}</Text>
+                            props => (
+                                <View>
+                                    <TextInput
+                                        placeholder='Enter Shopping List Name'
+                                        onChangeText={props.handleChange('shoppingListName')}
+                                        value={props.values.shoppingListName}
+                                    />
+                                    <TouchableOpacity onPress={() => {
+                                        props.handleSubmit()
+                                    }}>
+                                        <Icon name="plus" color="firebrick" size={50}/>
+                                    </TouchableOpacity>
+
+                                </View>
+                            )
                         }
-                    </View>
-                    <GroceryLists groceryLists={groceryLists} />
-                    <View style={styles.shoppingListItemContainer}>
-                        <Formik
-                            initialValues={{shoppingListName: ''}}
-                            onSubmit={(values, actions) => {
-                                //console.log('Values === ', values);
 
-                                // create a grocery list
-                                dispatch(createGroceryList(values.shoppingListName, true))
-                                actions.resetForm()
-                            }}>
-                            {
-                                props => (
-                                    <View>
-                                        <TextInput
-                                            placeholder='Enter Shopping List Name'
-                                            onChangeText={props.handleChange('shoppingListName')}
-                                            value={props.values.shoppingListName}
-                                        />
-                                        <TouchableOpacity onPress={() => {
-                                            props.handleSubmit()
-                                        }}>
-                                            <Icon name="plus" color="firebrick" size={50}/>
-                                        </TouchableOpacity>
+                    </Formik>
+                </View>
 
-                                    </View>
-                                )
-                            }
-
-                        </Formik>
-                    </View>
-
-                </View>}
+            </View>
         </View>
     )
 }

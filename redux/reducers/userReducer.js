@@ -1,22 +1,14 @@
 import * as types from '../constants/index'
 
-const initialState = {
-    currentUser: null
-}
+const initialState = {}
 
 export const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.FETCH_USER:
-            return {
-                ...state,
-                currentUser: action.currentUser
-            }
+            return action.currentUser
 
         case types.ADD_NEW_GROCERY_LIST_ID:
-            return {
-                ...state,
-                currentUser: action.updateData
-            }
+            return action.updateData
 
         case types.UPDATE_USER:
             return action.updateData

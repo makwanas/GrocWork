@@ -25,7 +25,7 @@ export default function Login({navigation}) {
 
         // Get the users ID token
   const user = await GoogleSignin.signIn();
-  console.log("User is",user);
+  //console.log("User is",user);
 
   // Create a Google credential with the token
   const googleCredential = auth.GoogleAuthProvider.credential(user.idToken);

@@ -1,72 +1,74 @@
-import React from 'react'
-import {Text, TouchableOpacity, View, TextInput, ActivityIndicator, StyleSheet, Button} from 'react-native';
+import React, {useEffect} from 'react'
+import {Text, TouchableOpacity, View, TextInput, StyleSheet, Button} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {fetchGroceryLists, fetchUser} from '../redux/actions/userAction';
+import {getCurrentUser} from '../redux/selectors/index';
+
 import {Formik} from 'formik';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import {createGroceryList} from '../../redux/actions/groceryListAction';
-import SpeechAndroid from 'react-native-android-voice';
+
+import {createGroceryList} from '../redux/actions/groceryListAction'
+import GroceryLists from "./GroceryLists";
 
 export default function ShoppingLists() {
-    // async function buttonClick(){
-    //     try{
-    //         //More Locales will be available upon release.
-    //         var spokenText = await SpeechAndroid.startSpeech("Speak now..", SpeechAndroid.US);
-    //         ToastAndroid.show(spokenText , ToastAndroid.LONG);
-    //     }catch(error){
-    //         switch(error){
-    //             case SpeechAndroid.E_VOICE_CANCELLED:
-    //                 ToastAndroid.show("Voice Recognizer cancelled" , ToastAndroid.LONG);
-    //                 break;
-    //             case SpeechAndroid.E_NO_MATCH:
-    //                 ToastAndroid.show("No match for what you said" , ToastAndroid.LONG);
-    //                 break;
-    //             case SpeechAndroid.E_SERVER_ERROR:
-    //                 ToastAndroid.show("Google Server Error" , ToastAndroid.LONG);
-    //                 break;
-    //             /*And more errors that will be documented on Docs upon release*/
-    //         }
-    //     }
-    // }
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchUserAction = fetchUser();
+        dispatch(fetchGroceryLists())
+        dispatch(fetchUserAction);
+    }, [])
+
+    const currentUser = useSelector(getCurrentUser);
+    const groceryLists = useSelector(state => state.groceryList)
+
+    //console.log('Shopping list === ', groceryLists)
+
     return (
         <View style={styles.shoppingListContainer}>
-                <View style={styles.afterGreetingContainer}>
-                    <View style={styles.greetingContainer}>
-                        <Text style={styles.greetingText}>Welcome </Text>
-                    </View>
-                    {/* <View>
-                        <Button onPress={buttonClick}>
-                            <Text>Checking speech recognition</Text>
-                        </Button>
-                    </View> */}
+            <HeaderCard/>
 
-                    <View style={styles.shoppingListItemContainer}>
-                        <Formik
-                            initialValues={{shoppingListName: ''}}
-                            onSubmit={(values, actions) => {
-                                console.log('Values === ', values);
-                                dispatch(createGroceryList(values.shoppingListName, true))
-                                actions.resetForm()
-                            }}>
-                            {
-                                props => (
-                                    <View>
-                                        <TextInput
-                                            placeholder='Enter Shopping List Name'
-                                            onChangeText={props.handleChange('shoppingListName')}
-                                            value={props.values.shoppingListName}
-                                        />
-                                        <TouchableOpacity onPress={() => {
-                                            props.handleSubmit()
-                                        }}>
-                                            <Icon name="plus" color="firebrick" size={50}/>
-                                        </TouchableOpacity>
-
-                                    </View>
-                                )
-                            }
-                        </Formik>
-                    </View>
-
+            <View style={styles.afterGreetingContainer}>
+                <View style={styles.greetingContainer}>
+                    {
+                        currentUser && currentUser.name !== null &&
+                        <Text style={styles.greetingText}>Welcome {currentUser.name}</Text>
+                    }
                 </View>
+                <GroceryLists groceryLists={groceryLists}/>
+                <View style={styles.shoppingListItemContainer}>
+                    <Formik
+                        initialValues={{shoppingListName: ''}}
+                        onSubmit={(values, actions) => {
+                            //console.log('Values === ', values);
+
+                            // create a grocery list
+                            dispatch(createGroceryList(values.shoppingListName, true))
+                            actions.resetForm()
+                        }}>
+                        {
+                            props => (
+                                <View>
+                                    <TextInput
+                                        placeholder='Enter Shopping List Name'
+                                        onChangeText={props.handleChange('shoppingListName')}
+                                        value={props.values.shoppingListName}
+                                    />
+                                    <TouchableOpacity onPress={() => {
+                                        props.handleSubmit()
+                                    }}>
+                                        <Icon name="plus" color="firebrick" size={50}/>
+                                    </TouchableOpacity>
+
+                                </View>
+                            )
+                        }
+
+                    </Formik>
+                </View>
+
+            </View>
         </View>
     )
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 
 
 export default function TitleLogo() {

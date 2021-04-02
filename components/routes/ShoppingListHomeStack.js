@@ -1,6 +1,5 @@
 import React,{useEffect} from 'react';
 import {View} from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import ShoppingLists from '../screens/ShoppingLists.js';
 import ToDoLists from '../screens/ToDoLists.js';
@@ -8,7 +7,7 @@ import ActivityLog from '../screens/ActivityLog.js';
 import UserAccount from '../screens/UserAccount.js';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchUser} from '../../redux/actions/index';
+import {fetchUser} from '../../redux/actions/userAction';
 import{getCurrentUser} from '../../redux/selectors/index'
 
 const Tab = createMaterialBottomTabNavigator();

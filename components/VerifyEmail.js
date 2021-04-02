@@ -3,7 +3,7 @@ import { View,  StyleSheet} from 'react-native';
 import HeaderCard from './HeaderCard';
 import SpeechAndroid from 'react-native-android-voice';
 import ShoppingListHomeStack from './routes/ShoppingListHomeStack';
-import VerifyingUserEmail from './VerifyingUserEmail';
+import VerifyingUserEmailHomeStack from './routes/VerifyingUserEmailHomeStack';
 
 
 export default function VerifyEmail({user}) {
@@ -31,14 +31,12 @@ export default function VerifyEmail({user}) {
     console.log("Inside verify email:", user)
     console.log("Inside verify email:", user.emailVerified)
 
-    
-    
     return (
         
         <View style={styles.container}>
             <HeaderCard />
             {user.emailVerified ? <ShoppingListHomeStack /> 
-            : <VerifyingUserEmail user={user}/>}
+            : <VerifyingUserEmailHomeStack user={user}/>}
             {/* <View>
                 <Button title="Checking speech recognition" onPress={buttonClick}/>
             </View> */}

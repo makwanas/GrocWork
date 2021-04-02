@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {View, TouchableWithoutFeedback, StyleSheet, Keyboard} from 'react-native';
-import TitleLogo from './TitleLogo';
-import RegistrationHomeStack from './routes/RegistrationHomeStack';
 import auth from '@react-native-firebase/auth';
 import VerifyEmail from './VerifyEmail';
+import HomeScreenStack from './routes/HomeScreenStack';
 
 export default function Workspace() {
     // Set an initializing state whilst Firebase connects
@@ -29,8 +28,7 @@ export default function Workspace() {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <TitleLogo/>
-                    <RegistrationHomeStack/>
+                    <HomeScreenStack />
                 </View>
             </TouchableWithoutFeedback>
         )
@@ -47,6 +45,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#EAEDED'
-
     }
 })

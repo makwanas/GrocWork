@@ -17,7 +17,7 @@ export default function ContactUs({navigation}) {
             <Text style={styles.subHeaderText}>Developers</Text>
             <View style={styles.userInformationContainer}>
             <Image style={styles.imageContainer} source={{
-                uri:`https://api.multiavatar.com/Saurabh Makwana.png`
+                uri:`https://api.multiavatar.com/Saurabhkumar Makwana.png`
             }}/>
             <View>
                 <Text style={styles.userNameText}>Saurabhkumar Makwana</Text>

@@ -9,8 +9,8 @@ const Stack = createStackNavigator();
 
 function RegistrationHomeStack() {
     return (
-        <NavigationContainer>
-            <Stack.Navigator
+        <NavigationContainer independent={true}>
+            <Stack.Navigator 
                 headerMode="none">
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Register" component={Register} />

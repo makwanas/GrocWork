@@ -26,7 +26,7 @@ export default function ShoppingListHomeStack() {
 
   return (
     <View style={{flex:1}}>
-      <NavigationContainer>
+      <NavigationContainer independent={true}>
     <Tab.Navigator
     activeColor="#138D75"
     inactiveColor="#000"

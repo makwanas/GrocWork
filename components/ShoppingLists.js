@@ -2,67 +2,73 @@ import React, {useEffect} from 'react'
 import {Text, TouchableOpacity, View, TextInput, ActivityIndicator, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
-import {fetchUser} from '../redux/actions/index';
+import {fetchGroceryLists, fetchUser} from '../redux/actions/userAction';
 import {getCurrentUser} from '../redux/selectors/index';
 import {Formik} from 'formik';
 import HeaderCard from './HeaderCard';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 import {createGroceryList} from '../redux/actions/groceryListAction'
+import GroceryLists from "./GroceryLists";
 
 export default function ShoppingLists() {
     const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchUserAction = fetchUser();
+        dispatch(fetchGroceryLists())
         dispatch(fetchUserAction);
     }, [])
 
     const currentUser = useSelector(getCurrentUser);
+    const groceryLists = useSelector(state => state.groceryList)
+
+    //console.log('Shopping list === ', groceryLists)
 
     return (
         <View style={styles.shoppingListContainer}>
             <HeaderCard/>
-            {currentUser === undefined ?
-                <View style={styles.activityContainer}>
-                    <ActivityIndicator size="large" color="black"/>
-                </View>
-                :
-                <View style={styles.afterGreetingContainer}>
-                    <View style={styles.greetingContainer}>
+
+            <View style={styles.afterGreetingContainer}>
+                <View style={styles.greetingContainer}>
+                    {
+                        currentUser && currentUser.name !== null &&
                         <Text style={styles.greetingText}>Welcome {currentUser.name}</Text>
-                    </View>
+                    }
+                </View>
+                <GroceryLists groceryLists={groceryLists}/>
+                <View style={styles.shoppingListItemContainer}>
+                    <Formik
+                        initialValues={{shoppingListName: ''}}
+                        onSubmit={(values, actions) => {
+                            //console.log('Values === ', values);
 
-                    <View style={styles.shoppingListItemContainer}>
-                        <Formik
-                            initialValues={{shoppingListName: ''}}
-                            onSubmit={(values, actions) => {
-                                console.log('Values === ', values);
-                                dispatch(createGroceryList(values.shoppingListName, true))
-                                actions.resetForm()
-                            }}>
-                            {
-                                props => (
-                                    <View>
-                                        <TextInput
-                                            placeholder='Enter Shopping List Name'
-                                            onChangeText={props.handleChange('shoppingListName')}
-                                            value={props.values.shoppingListName}
-                                        />
-                                        <TouchableOpacity onPress={() => {
-                                            props.handleSubmit()
-                                        }}>
-                                            <Icon name="plus" color="firebrick" size={50}/>
-                                        </TouchableOpacity>
+                            // create a grocery list
+                            dispatch(createGroceryList(values.shoppingListName, true))
+                            actions.resetForm()
+                        }}>
+                        {
+                            props => (
+                                <View>
+                                    <TextInput
+                                        placeholder='Enter Shopping List Name'
+                                        onChangeText={props.handleChange('shoppingListName')}
+                                        value={props.values.shoppingListName}
+                                    />
+                                    <TouchableOpacity onPress={() => {
+                                        props.handleSubmit()
+                                    }}>
+                                        <Icon name="plus" color="firebrick" size={50}/>
+                                    </TouchableOpacity>
 
-                                    </View>
-                                )
-                            }
+                                </View>
+                            )
+                        }
 
-                        </Formik>
-                    </View>
+                    </Formik>
+                </View>
 
-                </View>}
+            </View>
         </View>
     )
 }

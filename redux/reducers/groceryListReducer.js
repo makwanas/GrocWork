@@ -5,12 +5,11 @@ const initialState = []
 const groceryListReducer = (state = initialState, action) => {
     switch (action.type) {
         // Create a grocery list without changing any state.
-        case types.CREATE_GREOCERY_LIST:
-            console.log('Within Reducer === ', action.groceryList)
+        case types.CREATE_GROCERY_LIST:
             return [
                 {
                     groceryListId: action.groceryList.groceryListId,
-                    members: [action.groceryList.members],
+                    members: action.groceryList.members,
                     name: action.groceryList.name,
                     dateCreated: action.groceryList.dateCreated,
                     privacy: action.groceryList.privacy,
@@ -18,6 +17,12 @@ const groceryListReducer = (state = initialState, action) => {
                 },
                 ...state
             ]
+
+        case types.LOAD_GROCERY_LISTS:
+            return action.groceryList
+
+        case types.DELETE_GROCERY_LIST:
+            return action.updateData
 
         default:
             return state

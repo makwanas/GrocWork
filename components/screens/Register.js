@@ -37,7 +37,8 @@ function Register({navigation}) {
                                 .doc(auth().currentUser.uid)
                                 .set({
                                     name: values.name,
-                                    email: values.email
+                                    email: values.email,
+                                    listCreated: []
                                 })
                                 .then(() => {
                                     console.log("User added to the Firestore!");

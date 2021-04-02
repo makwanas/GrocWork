@@ -1,15 +1,12 @@
 import React, {useEffect} from 'react'
 import {Text, TouchableOpacity, View, TextInput, StyleSheet, Button} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
-import {fetchGroceryLists, fetchUser} from '../redux/actions/userAction';
-import {getCurrentUser} from '../redux/selectors/index';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchUser, fetchGroceryLists} from '../../redux/actions/userAction';
+import {getCurrentUser} from '../../redux/selectors/index';
 import {Formik} from 'formik';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-
-import {createGroceryList} from '../redux/actions/groceryListAction'
-import GroceryLists from "./GroceryLists";
+import {createGroceryList} from '../../redux/actions/groceryListAction'
+import GroceryLists from "../GroceryLists";
 
 export default function ShoppingLists() {
     const dispatch = useDispatch();
@@ -27,7 +24,6 @@ export default function ShoppingLists() {
 
     return (
         <View style={styles.shoppingListContainer}>
-            <HeaderCard/>
 
             <View style={styles.afterGreetingContainer}>
                 <View style={styles.greetingContainer}>

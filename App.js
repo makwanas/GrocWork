@@ -1,12 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Header from './components/Header.js';
-import ListItem from './components/ListItem.js';
-import AddItem from './components/AddItem.js';
-import DeleteChecked from './components/DeleteChecked.js';
-import TitleLogo from './components/TitleLogo.js';
-import { View, Text, StyleSheet, FlatList, Alert, TouchableWithoutFeedback, Keyboard, Button, TouchableOpacity } from 'react-native';
-import { v4 as uuidv4 } from 'uuid';
-import auth from '@react-native-firebase/auth';
+import React from 'react';
 import { Provider } from 'react-redux';
 import Workspace from './components/Workspace';
 import store from './redux/store/index';

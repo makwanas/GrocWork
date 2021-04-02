@@ -1,37 +1,42 @@
-import React, {useEffect} from 'react'
-import {Text, TouchableOpacity, View, TextInput, ActivityIndicator, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
-import {fetchUser} from '../redux/actions/index';
-import {getCurrentUser} from '../redux/selectors/index';
+import React from 'react'
+import {Text, TouchableOpacity, View, TextInput, ActivityIndicator, StyleSheet, Button} from 'react-native';
 import {Formik} from 'formik';
-import HeaderCard from './HeaderCard';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-
-import {createGroceryList} from '../redux/actions/groceryListAction'
+import {createGroceryList} from '../../redux/actions/groceryListAction';
+import SpeechAndroid from 'react-native-android-voice';
 
 export default function ShoppingLists() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        const fetchUserAction = fetchUser();
-        dispatch(fetchUserAction);
-    }, [])
-
-    const currentUser = useSelector(getCurrentUser);
-
+    // async function buttonClick(){
+    //     try{
+    //         //More Locales will be available upon release.
+    //         var spokenText = await SpeechAndroid.startSpeech("Speak now..", SpeechAndroid.US);
+    //         ToastAndroid.show(spokenText , ToastAndroid.LONG);
+    //     }catch(error){
+    //         switch(error){
+    //             case SpeechAndroid.E_VOICE_CANCELLED:
+    //                 ToastAndroid.show("Voice Recognizer cancelled" , ToastAndroid.LONG);
+    //                 break;
+    //             case SpeechAndroid.E_NO_MATCH:
+    //                 ToastAndroid.show("No match for what you said" , ToastAndroid.LONG);
+    //                 break;
+    //             case SpeechAndroid.E_SERVER_ERROR:
+    //                 ToastAndroid.show("Google Server Error" , ToastAndroid.LONG);
+    //                 break;
+    //             /*And more errors that will be documented on Docs upon release*/
+    //         }
+    //     }
+    // }
     return (
         <View style={styles.shoppingListContainer}>
-            <HeaderCard/>
-            {currentUser === undefined ?
-                <View style={styles.activityContainer}>
-                    <ActivityIndicator size="large" color="black"/>
-                </View>
-                :
                 <View style={styles.afterGreetingContainer}>
                     <View style={styles.greetingContainer}>
-                        <Text style={styles.greetingText}>Welcome {currentUser.name}</Text>
+                        <Text style={styles.greetingText}>Welcome </Text>
                     </View>
+                    {/* <View>
+                        <Button onPress={buttonClick}>
+                            <Text>Checking speech recognition</Text>
+                        </Button>
+                    </View> */}
 
                     <View style={styles.shoppingListItemContainer}>
                         <Formik
@@ -58,11 +63,10 @@ export default function ShoppingLists() {
                                     </View>
                                 )
                             }
-
                         </Formik>
                     </View>
 
-                </View>}
+                </View>
         </View>
     )
 }
@@ -89,7 +93,6 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     afterGreetingContainer: {
-        flex: 1,
-        backgroundColor: 'blue'
+        flex: 1
     }
 })

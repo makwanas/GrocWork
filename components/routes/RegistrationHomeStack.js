@@ -7,7 +7,7 @@ import React from 'react';
 
 const Stack = createStackNavigator();
 
-function HomeStack() {
+function RegistrationHomeStack() {
     return (
         <NavigationContainer>
             <Stack.Navigator
@@ -19,6 +19,6 @@ function HomeStack() {
     );
 }
 
-export default HomeStack
+export default RegistrationHomeStack
 
 

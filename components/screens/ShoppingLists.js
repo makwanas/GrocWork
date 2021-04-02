@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react'
 import {Text, TouchableOpacity, View, TextInput, StyleSheet, Button} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchUser, fetchGroceryLists} from '../../redux/actions/userAction';
-import {getCurrentUser} from '../../redux/selectors/index';
+import {fetchGroceryLists} from '../../redux/actions/userAction';
 import {Formik} from 'formik';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {createGroceryList} from '../../redux/actions/groceryListAction'
@@ -12,26 +11,24 @@ export default function ShoppingLists() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchUserAction = fetchUser();
         dispatch(fetchGroceryLists())
-        dispatch(fetchUserAction);
     }, [])
 
-    const currentUser = useSelector(getCurrentUser);
     const groceryLists = useSelector(state => state.groceryList)
 
     //console.log('Shopping list === ', groceryLists)
 
     return (
         <View style={styles.shoppingListContainer}>
-
+            <Text style={styles.headerText}>Your Shopping Lists</Text>
+            <View style={styles.addShoppingListContainer}>
+                    <TouchableOpacity style={styles.addShoppingListButtonContainer}>
+                    <Icon style={styles.addShoppingListButtonIcon} name="plus" size={24} color="#52BE80"/>
+                    <Text style={styles.addShoppingListButtonText}> Add a List</Text>
+                    </TouchableOpacity>
+            </View>
             <View style={styles.afterGreetingContainer}>
-                <View style={styles.greetingContainer}>
-                    {
-                        currentUser && currentUser.name !== null &&
-                        <Text style={styles.greetingText}>Welcome {currentUser.name}</Text>
-                    }
-                </View>
+                
                 <GroceryLists groceryLists={groceryLists}/>
                 <View style={styles.shoppingListItemContainer}>
                     <Formik
@@ -70,8 +67,41 @@ export default function ShoppingLists() {
 }
 
 const styles = StyleSheet.create({
+    headerText:{
+        fontFamily:'OpenSans-Semibold',
+        fontSize: 26,
+        backgroundColor:"#E5E7E9",
+        paddingLeft:5,
+        paddingTop:5,
+        paddingBottom:5
+    },
     shoppingListContainer: {
         flex: 1
+    },
+    addShoppingListContainer:{
+        flexDirection:'row-reverse',
+    },
+    addShoppingListButtonContainer:{
+        flexDirection:'row',
+        borderWidth:2,
+        borderRadius:12,
+        borderColor:"#52BE80",
+        marginRight:5,
+        marginTop:5
+
+    },
+    addShoppingListButtonText:{
+        paddingTop:5,
+        paddingBottom:5,
+        paddingRight:10,
+        fontFamily:'OpenSans-Semibold',
+        fontSize: 18,
+        color:"#52BE80"
+    },
+    addShoppingListButtonIcon:{
+        paddingTop:5,
+        paddingLeft:5,
+        paddingRight:3
     },
     activityContainer: {
         justifyContent: 'center',

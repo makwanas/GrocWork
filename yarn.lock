@@ -948,6 +948,11 @@
     "@types/yargs" "^15.0.0"
     "chalk" "^4.0.0"
 
+"@multiavatar/multiavatar@^1.0.6":
+  "integrity" "sha512-GqO6OMmoPef69Rd9SH97e82YZM7EXV+OBYKkGgi7+n3x3uTYO9Xb86gzW8/0PFbp+BdSWMyXeT+W5odY8d6wFg=="
+  "resolved" "https://registry.npmjs.org/@multiavatar/multiavatar/-/multiavatar-1.0.6.tgz"
+  "version" "1.0.6"
+
 "@react-native-community/cli-debugger-ui@^5.0.1-alpha.1":
   "integrity" "sha512-o6msDywXU7q0dPKhCTo8IrpmJ+7o+kVghyHlrAndnb30p6vnm4pID5Yi7lHXGfs6bQXorKUWX8oD5xYwWkN8qw=="
   "resolved" "https://registry.npmjs.org/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-5.0.1-alpha.1.tgz"

@@ -21,8 +21,8 @@ function Register({navigation}) {
         <View>
             <Formik
                 initialValues={{
-                    name: 'Guan Lun',
-                    email: 'zengguanlun@gmail.com',
+                    name: 'Saurabhkumar Makwana',
+                    email: 'makwanas@oregonstate.edu',
                     password: 'password'
                 }}
                 validationSchema={reviewSchema}
@@ -46,11 +46,6 @@ function Register({navigation}) {
                                 console.log('User === ', user)
                                 if (user.emailVerified === false) {
                                     user.sendEmailVerification().then(() => {
-                                        Alert.alert("Verify email", " Please click on the link sent in the mentioned email",
-                                        [{
-                                            text: "Ok"
-                                        }],
-                                        {cancelable: true})
                                         console.log("email verification sent to user");
                                     });
                                 } else {

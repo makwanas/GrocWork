@@ -2,7 +2,7 @@ import * as types from '../constants/index'
 
 const initialState = {}
 
-export const userReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.FETCH_USER:
             return action.currentUser
@@ -21,3 +21,5 @@ export const userReducer = (state = initialState, action) => {
     //     currentUser: action.currentUser
     // }
 }
+
+export default userReducer

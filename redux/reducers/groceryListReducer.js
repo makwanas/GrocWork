@@ -24,6 +24,12 @@ const groceryListReducer = (state = initialState, action) => {
         case types.DELETE_GROCERY_LIST:
             return action.updateData
 
+        case types.ADD_ITEM_ID:
+            return [
+                ...state.filter(item => item.groceryListId !== action.groceryListId),
+                action.updateData
+            ]
+
         default:
             return state
     }

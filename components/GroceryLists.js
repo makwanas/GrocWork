@@ -5,6 +5,7 @@ import {useSelector} from "react-redux";
 
 const GroceryLists = ({groceryLists}) => {
     const {listCreated} = useSelector(state => state.user)
+    console.log('Grocery Lists ==> ', groceryLists)
     return groceryLists && (
         <View>
             {groceryLists && groceryLists.map(groceryList => {
@@ -12,7 +13,7 @@ const GroceryLists = ({groceryLists}) => {
                     groceryList &&
                     groceryList.groceryListId &&
                     listCreated.includes(groceryList.groceryListId) &&
-                    <GroceryList groceryList={groceryList}/>
+                    <GroceryList key={groceryList.groceryListId} groceryList={groceryList}/>
                 )
             })}
         </View>

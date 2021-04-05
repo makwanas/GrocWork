@@ -21,8 +21,8 @@ function Register({navigation}) {
         <View>
             <Formik
                 initialValues={{
-                    name: 'Saurabhkumar Makwana',
-                    email: 'makwanas@oregonstate.edu',
+                    name: 'Guan Lun Zeng',
+                    email: 'zengguanlun@gmail.com',
                     password: 'password'
                 }}
                 validationSchema={reviewSchema}

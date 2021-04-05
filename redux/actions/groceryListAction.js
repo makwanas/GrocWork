@@ -2,6 +2,7 @@ import * as types from '../constants/index'
 import auth from '@react-native-firebase/auth'
 import firestore from "@react-native-firebase/firestore";
 import {addNewGroceryListId, fetchGroceryLists, updateUser} from '../actions/userAction'
+import {loadItems} from './itemAction'
 import {useSelector} from "react-redux";
 
 export const createGroceryList = (name, privacy) => async dispatch => {
@@ -66,7 +67,7 @@ export const deleteGroceryList = (groceryListId) => async dispatch => {
 
     const members = groceryListData.members.filter(id => id !== auth().currentUser.uid)
 
-    console.log('Members ==> ', members)
+    //console.log('Members ==> ', members)
     if (members.length === 0) {
         await groceryListRef.delete()
     } else {
@@ -87,4 +88,43 @@ export const deleteGroceryList = (groceryListId) => async dispatch => {
 
     dispatch(updateUser())
     dispatch(loadGroceryLists(userData.listCreated))
+}
+
+export const modifyNameGroceryList = (groceryListId, newName) => async dispatch => {
+    const groceryListRef = firestore().collection('GroceryList').doc(groceryListId)
+    const groceryListDoc = await groceryListRef.get()
+    // console.log('DOCCCCC ==> ', groceryListDoc.data())
+    await groceryListRef.update({name: newName})
+    // dispatch({
+    //     type: types.MODIFY_NAME_GROCERY_LIST,
+    //     upd
+    // })
+}
+
+export const fetchItems = (groceryListId) => async dispatch => {
+    const groceryListRef = firestore().collection(types.GROCERY_LIST).doc(groceryListId)
+    const groceryListDoc = await groceryListRef.get()
+    const groceryListData = groceryListDoc.data()
+    //console.log('Fetch Items ==> ', groceryListData)
+    if (groceryListData.items) {
+        dispatch(loadItems(groceryListData.items))
+    }
+}
+
+export const addItemId = (groceryListId, itemId) => async dispatch => {
+    const groceryListRef = firestore().collection(types.GROCERY_LIST).doc(groceryListId)
+    const groceryListDoc = await groceryListRef.get()
+    const groceryListData = groceryListDoc.data()
+    const updateData = {
+        ...groceryListData,
+        items: [...groceryListData.items, itemId]
+    }
+    await groceryListRef.set(updateData)
+    dispatch(loadItems(updateData.items))
+
+    dispatch({
+        type: types.ADD_ITEM_ID,
+        groceryListId,
+        updateData
+    })
 }

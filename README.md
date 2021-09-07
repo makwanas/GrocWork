@@ -20,3 +20,15 @@ npx react-native run-android
 
 # Some of the screenshots of the application
 
+<img src="/images/login.JPG" width="350" height="700">   <img src="/images/register.JPG" width="350" height="700">   
+
+Login and Registeration functionality
+
+<img src="/images/u41.JPG" width="350" height="700">
+
+2-way email verification
+
+<img src="/images/u5.JPG" width="350" height="700">    <img src="/images/u53.JPG" width="350" height="500">
+
+User Account details
+
